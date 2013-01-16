@@ -1,0 +1,355 @@
+<html>
+<head>
+<title>Skew</title>
+<meta charset="utf-8">
+
+<style>
+svg {
+  border: 1px solid blue;
+  margin-bottom: 1em;
+}
+circle {
+  stroke-width: 1.5px;
+}
+rect.fram {
+  stroke-width: 1.5px;
+  stroke: pink;
+  fill: none;
+}
+#slider0 {
+  margin-bottom: 1em;
+}
+.cntls {
+  display: inline-block;
+}
+</style>
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.0.1/d3.v3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.3/underscore-min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.9.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+
+<script>
+
+
+//#######################################################################
+//  Global namespace.
+//#######################################################################
+
+var width = 1500, height = 480, marg = 23;
+var half_width = width / 2;
+var half_height = height / 2;
+
+var wk = d3.scale.linear().range([marg, width - marg]);
+var hk = d3.scale.linear().range([marg, height - marg]);
+
+var DATA = _.map(_.range(24), function (d) {
+  return {
+    d: d,
+    x: wk(Math.random()),
+    y: hk(Math.random()),
+  };
+})
+
+var k = d3.scale.linear().domain([0, 23]);
+var w = d3.scale.linear().domain([-1, 24]).range([marg, width - marg]);
+var rad = d3.scale.linear().domain([0, 24]).range([0.0, 6.283185307179586]);
+var deg = d3.scale.linear().domain([0, 24]).range([0.0, 360.0]);
+var j = d3.scale.pow().exponent(5).domain([0.0, 1.0]).range([0, 70])
+
+var ns = {
+  skewx: 0,
+  skewy: 0,
+  huex: 0,
+  phase0: 180.0,
+};
+
+
+$(function() {
+
+//#######################################################################
+//  Set up the viewBox and resizing.
+//#######################################################################
+  var the_svg = $("#pony");
+  var aspect = the_svg.width() / the_svg.height();
+  $(window).on("resize", function() {
+    var the_svg = $("#pony");
+    var container = $("#container");
+    var targetWidth = container.width();
+    the_svg.attr("width", targetWidth);
+    the_svg.attr("height", Math.round(targetWidth / aspect));
+  }).trigger("resize");
+
+
+//#######################################################################
+//  Create the main group.
+//#######################################################################
+  var svg = d3.select("svg");
+  var g = svg.append("svg:g");
+
+  g.append("svg:rect")
+  .attr("class", "fram")
+  .attr("width", width)
+  .attr("height", height)
+  ;
+
+//#######################################################################
+//  Each data element gets two groups and a rectangle:
+//
+//      "hole" for translation
+//
+//      "lep" for skew
+//
+//#######################################################################
+  var cs = g.selectAll("g.hole")
+    .data(DATA)
+
+    .enter().append("svg:g")
+      .attr("class", "hole")
+      .attr("transform", function(d) {
+        return "translate(" + d.x + " " + d.y + ")";
+      })
+
+    .append("svg:g")
+      .attr("class", "lep")
+
+    .append("svg:rect")
+      .attr("width", 30)
+      .attr("height", 30 * 1.618)
+      .attr("rx", 3)
+      .attr("ry", 3)
+      .attr("stroke", function(d) {
+        return d3.hsl((180.0 + deg(d.d)) % 360.0, 1, 0.5);
+      })
+      .style("fill", function(d) { return d3.hsl(deg(d.d), 1, 0.75); })
+      .attr("transform", "translate(-15 0)")
+
+  var holes = g.selectAll("g.hole");
+  var lep = g.selectAll("g.lep");
+
+//#######################################################################
+//  Create some nice labels.
+//
+//  These are inside the skew group so they pick it up, skewed text is so 2013.
+//#######################################################################
+  lep.append("text")
+//    .attr("text-anchor", "middle")
+//    .attr("alignment-baseline", "before-edge")
+      .attr("y", 17)
+      .attr("x", -12)
+    .text(function(d) { return "" + d.d; })
+    .style("fill", function(d) {
+      return d3.hsl((180.0 + deg(d.d)) % 360.0, 1, 0.5);
+    })
+    ;
+
+
+//#######################################################################
+//  Adjust the skew.
+//#######################################################################
+  function sky() {
+    lep.transition()
+      .duration(1000)
+      .attr("transform", function(d) {
+        var z = compute_skew(d.x, d.y)
+        return "scale(" + (1-z[0]) + " 1) skewY(" + z[1] + ")";
+      });
+    return false;
+  }
+
+  var lazysky = _.debounce(sky, 250);
+
+  function compute_skew(x, y) {
+    var dx = Math.abs(x - half_width);
+    var dy = Math.abs(y - half_height);
+    var x_scale = dx / half_width;
+    var skewy = j(x_scale);
+
+    // Figure out which quadrant we're in.
+    var xq = (x > half_width);
+    var yq = (y < half_height);
+    skewy = ((xq && yq) || (!xq && !yq)) ? -skewy : skewy;
+
+    return [x_scale, skewy];
+  }
+
+
+//#######################################################################
+//  Reset the skew.
+//#######################################################################
+  function reset_skew() {
+    lep.transition()
+      .duration(1000)
+      .attr("transform", "scale(1 1) skewY(0) skewX(0)");
+    return false;
+  }
+
+
+//#######################################################################
+//  Line 'em up and sort 'em back out again.
+//#######################################################################
+  function aligned_em() {
+    holes.transition()
+      .duration(1000)
+      .attr("transform", function(d) {
+        return "translate(" + w(d.d) + " " + half_height + ")";
+      })
+    reset_skew();
+    return false;
+  }
+
+  function loc_em() {
+    _.each(DATA, function(d) {
+      d.x = wk(Math.random());
+      d.y = hk(Math.random());
+    });
+
+    holes.transition()
+      .duration(1000)
+      .attr("transform", function(d) {
+        return "translate(" + d.x + " " + d.y + ") rotate(0)";
+      })
+    sky();
+    return false;
+  }
+
+
+//#######################################################################
+//  Circle!
+//#######################################################################
+  function circ_em() {
+    holes.transition()
+      .duration(1000)
+      .attr("transform", function(d) {
+        var x = Math.sin(rad(d.d)) * 133 + half_width;
+        var y = Math.cos(rad(d.d)) * 133 + half_height;
+        return "translate(" + x + " " + y + ") rotate(" + (-deg(d.d)) + ")";
+      })
+    reset_skew();
+    return false;
+  }
+
+
+//#######################################################################
+//  Zoom in and out.
+//#######################################################################
+function zoomin() {
+  g.transition()
+    .duration(1000)
+    .attr("transform", function(d) {
+      var scale_factor = 0.68;
+      var x = width * scale_factor / 4;
+      var y = height * scale_factor / 4;
+      return "translate(" + x + " " + y + ") scale(" + scale_factor + ")";
+    });
+  return False;
+}
+
+function zoomout() {
+  g.transition()
+    .duration(1000)
+    .attr("transform", "translate(0 0) scale(1.0)");
+  return False;
+}
+
+
+//#######################################################################
+//  Fun with colors!
+//#######################################################################
+function hueish() {
+  lep.selectAll("rect").transition()
+    .duration(15)
+    .attr("stroke", function(d) {
+      var h = ns.phase0 + ns.huex + deg(d.d);
+      return d3.hsl(h % 360.0, 1, 0.5);
+    })
+    .style("fill", function(d) {
+      var h = ns.huex + deg(d.d);
+      return d3.hsl(h % 360.0, 1, 0.75);
+    })
+    ;
+  lep.selectAll("text").transition()
+    .duration(1000)
+    .style("fill", function(d) {
+      var h = ns.phase0 + ns.huex + deg(d.d);
+      return d3.hsl(h % 360.0, 1, 0.75);
+    })
+    ;
+}
+
+
+//#######################################################################
+//  Set up the controls.
+//#######################################################################
+
+  $("#skew_controls").buttonset();
+  $("#clickit").click(reset_skew);
+  $("#clackit").click(sky);
+
+  $("#zoom").button().toggle(zoomin, zoomout);
+
+  $("#align_controls").buttonset();
+  $("#aligny").click(aligned_em);
+  $("#circy").click(circ_em);
+  $("#resety").click(loc_em);
+
+  $("#slider0").slider({
+    min: 0,
+    max: 359,
+    slide: function(event, ui) {
+      ns.huex = $(this).slider("value");
+      hueish();
+    },
+    change: function(event, ui) {
+      ns.huex = $(this).slider("value");
+      hueish();
+    },
+  });
+  $("#slider1").slider({
+    min: 0,
+    max: 359,
+    value: ns.phase0,
+    slide: function(event, ui) {
+      ns.phase0 = $(this).slider("value");
+      hueish();
+    },
+    change: function(event, ui) {
+      ns.phase0 = $(this).slider("value");
+      hueish();
+    },
+  });
+
+});
+</script>
+
+</head>
+<body>
+
+<h1>Hi There!</h1>
+<div id="container">
+<svg id="pony" width="1500" height="480" viewBox="0 0 1500 480" perserveAspectRatio="xMidYMid"></svg>
+<br>
+
+<div class="cntls" id="skew_controls">
+<a href="#" id="clickit">unskew</a>
+<a href="#" id="clackit">skew</a>
+</div>
+
+<a href="#" id="zoom">zoom</a>
+
+<div class="cntls" id="align_controls">
+<a href="#" id="aligny">align</a>
+<a href="#" id="circy">circle</a>
+<a href="#" id="resety">spread</a>
+</div>
+
+<br><br>
+
+<div id="slider0"></div>
+<div id="slider1"></div>
+
+</div>
+
+</body>
+</html>
