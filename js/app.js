@@ -51,7 +51,7 @@ var selectedID=[], selectedLayers=[], selectedObj=[];
 
 //var myJson ={};
 var map = new OpenLayers.Map({
-    div: "coveragemap",
+    div: "map",
     projection: "EPSG:900913",
     displayProjection: "EPSG:4326",
     numZoomLevels:14,
@@ -242,24 +242,21 @@ function updateCoverageLayers(cLayers){
 }
 
 function createServiceList(cLayers){
-	$("#selectedService").html('');
-	var content = "<table id='tbl-service' class='tbl-data'><thead><tr><th><div class='sort-wrapper'>Visibility &nbsp;<span class='sort'></span></div></th>" + 
-							"<th><div class='sort-wrapper'>Legend &nbsp;<span class='sort'></span></div></th>" + 
-							"<th><div class='sort-wrapper'>Company &nbsp;<span class='sort'></span></div></th>" + 
-							"<th><div class='sort-wrapper'>Protocal &nbsp;<span class='sort'></span></div></th>" +
-							"<th><div class='sort-wrapper'>Zoom &nbsp;<span class='sort'></span></div></th></tr></thead>";
+	$('#selectedService').show();
+	$("#tbl-service").find('tbody').empty();
+	var content = "";
 	 for (var i = 0; i < cLayers.length; i++) {
-	 	console.log(cLayers[i].extent);
+	 	console.log(content);
 
 	        content += '<tr><td><input id=' + cLayers[i].id + ' type="checkbox" checked onclick="handleVisibility(' + cLayers[i].id + ');">' + "</td>";
 	        content += '<td><div style="width:40px;height:20px;background-color:' + colorArray[i] + ';"></div></td>';
 	        content += "<td>" + cLayers[i].companyName + "</td>";
 	        content += "<td>" + cLayers[i].techType + "</td>";
-	        content += '<td><a class="lnk-toggle" style="float:left" href="#" onclick="zoomToBound(' + cLayers[i].extent + ')">go</a></td></tr>';
+	        content += '<td><a class="lnk-toggle" style="float:left" href="#" onclick="zoomToBound(' + cLayers[i].extent + ')">Zoom</a></td></tr>';
 	 } 
  
- content += "</table>";
- $("#selectedService").html(content);
+ //content += "</table>";
+ $("#tbl-service").find('tbody').append(content);
 }
 
 function handleVisibility(id){

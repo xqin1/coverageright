@@ -1,381 +1,312 @@
-/* Global Elements */
-body {	
-	background: url("../img/page-bg.png") no-repeat scroll center 10px #010103;
-	padding:0;
-	-webkit-text-size-adjust: none;
+
+/* =============================================================================
+   Site Styles
+   ========================================================================== */
+
+body {
+	background-color: #505050;
+	margin: 0 auto;
 }
 
-a {
-	text-decoration:none;
-	color: #005BBA;
-}
-
-a:hover {
-	color: #2B7818;
-	text-decoration: underline;
-}
-
-a:focus {
-	outline: outline;
-}
-
-a.button {
-	background: url("../img/bg-buttons-blue.png") repeat-x scroll 0 -80px #21527D;
-	background-position: 0 0;
-	color: #FFF;
-	display: inline-block;
-	padding: 3px 9px;
-}
-
-a.button:hover {
-	background-position: 0 -40px;
-}
-
-
-/* Headings */
 h1 {
-	color:#FFF;
-	float: left;
-	font-family:Arial, Helvetica, sans-serif;
-	font-size:20px;
-	font-weight:normal;	
+	color: #FFF;
+	font-size: 26px;
+	font-weight: normal;
+	line-height: normal;
+	padding: 10px 0 0 10px;
 }
 
 h2 {
-	color: #666;
-	font-size: 16px; 
-	font-weight: bold;
-	line-height: 24px;
-	margin: 0;
-	padding-left: 0;   
-}
-
-#hd-itemList {
-	float: left;	
-}
-
-#hd-siteSubTitle {
-	color: #FFF;	
-	line-height: 50px;
-}
-
-#hd-timeStamp {
-	float: right;
-	font-size: 12px;
-	font-weight: normal;
-	color: #FFF;
-	padding-top: 15px;
-	text-align: right;	
-}
-
-.hd-sidebar {
-	float: left;	
+	font-size: 16px;	
 }
 
 
-/* Links */
-#skip { position:absolute; left:35%; top:0; z-index:900; width:50%; }
-#skip a { display:block; width:50%; padding:5px; border-width:0 1px 1px; border-style:solid; border-color:#8cdb78; background:#000; color:#bfe9ff; text-align:center; }
-#skip a:hover, #skip a:focus, #skip a:active { color:#9cf285; text-decoration:none; }
-.lnk-toggle {
-	float: right;	
-	padding-top: 3px;
+
+/* =============================================================================
+   Header
+   ========================================================================== */
+header {
+	margin-bottom: 0;
 }
 
-/* Header */
 #fcc-banner {
-	background:transparent url("../img/bgNav.png") repeat-x scroll 0 0;
+	background: url("../img/bgNav.png") repeat-x scroll 0 0 transparent;
 	display: block;
 	overflow: hidden;
 }
 
+#fcc-banner a, #fcc-banner h1 {
+	float: left;
+}
 
-/* Footer */
-#footer {
+#fcc-banner h1 {
+	margin-left: 15px;
+}
+
+/* =============================================================================
+   Page Heading
+   ========================================================================== */
+#pg-head {
+	border-bottom: 1px dotted #CCC;
+	margin: 10px 0 35px;
+	overflow: hidden;
+}
+
+/* =============================================================================
+   Utility Navigation
+   ========================================================================== */
+#nav-utility {
+	padding: 20px 0 0;
+	text-align: right;
+}
+
+#nav-utility a {
+	font-weight: bold;
+}
+
+.hd-sections {
+	display: none;
+	visibility: hidden;
+}
+
+.hd-sections a {
+	background-color: #000;
+	border-color: #000;
+	border-radius: 6px 6px 0 0;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	padding: 11px 14px 13px;
+}
+
+
+
+/* =============================================================================
+   Footer
+   ========================================================================== */
+footer {
+	background-color: #505050;
 	clear: both;
 	color: #EBEBEB;
 	font-size: 11px;
-	margin: 0 0 100px;
+	line-height: 18px;
+	margin: 0;
 	padding: 0;
-}
-
-#footer .container_12 {
-	background-color: #505050;
-	overflow: hidden;	
 }
 
 #footer-nav {
 	overflow: hidden;
-	padding: 20px 0 50px 20px;	
+	padding: 20px 0 50px 0;
 }
 
 #footer-nav .col {
 	display: inline;
 	float: left;
 	margin: 0;
-	width: 220px;	
+	width: 220px;
 }
 
-#footer ul {
+footer ul {
 	margin:0;
 	padding-top:10px;
 }
 
-#footer li {
+footer li {
 	list-style-type:none;
+	line-height: 18px;
 	margin:0 0 3px;
 	padding-right:19px;
 }
 
-#footer a {
+footer a {
 	color:#EBEBEB;
 	height:30px;
-	padding-top:2px;	
+	padding-top:2px;
 	text-shadow: 0 1px 0 #000000;
 }
 
-
-/* Main Wrapper */
-#main-wrapper {
-	background-color: #FFF;
-	overflow: hidden;
-	position: relative;
+footer a:hover {
+	color: #FFF;
 }
 
-/* Map */
+.ft-map {
+	margin-top: 0;
+}
+
+
+/* =============================================================================
+   Map
+   ========================================================================== */
 #map-container {
+	background-color: #FFFFFF;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+}
+
+#map-body {
 	float: left;
 	height: 700px;
 	position: relative;
 	width: 65%;
 }
 
-ul.macro {	
-	background: rgb(0, 60, 136); /* fallback for IE 7/8 */
-	background: none repeat scroll 0 0 rgba(0, 60, 136, 0.5);	
-	box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
-	margin: 0;
-	-moz-box-shadow: 0 1px 5px rgba(0, 0, 0, .3);
-	position: absolute;
-	right: 5px;
-	top: 5px;
-	-webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, .3);	
-	z-index:999;
+#map {
+	height: 100%;
+	width: 100%;	
 }
 
-ul.macro li {	
-	list-style-type:none;
-	margin-bottom: 0;	
+#map img {
+	max-width: none; 	
 }
 
-ul.macro li a {
-	color: white;
-	font-weight: bold;
-	padding: 6px 5px;
-	background: transparent;
-	color: white;
-	width: 100px;
-	display: block;
+#map-layerSwitch ul {
+    background: none repeat scroll 0 0 rgba(0, 60, 136, 0.5);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 999;
+}
+			
+#map-layerSwitch li {
+	 list-style-type: none;
+    margin-bottom: 0;	
 }
 
-ul.macro li a.active {
-	color: #fff;
-	background-color: #1F90FF;
+#map-layerSwitch a.active {
+    background-color: #1F90FF;
+    color: #FFFFFF;
+}
+#map-layerSwitch a {
+    background: none repeat scroll 0 0 transparent;
+    color: white;
+    display: block;
+    font-weight: bold;
+    padding: 6px 5px;
+    width: 100px;
 }
 
+/* =============================================================================
+   Map Sidebar
+   ========================================================================== */
 
 #map-sidebar {
-	background-color: #F2F2F2;
+	background-color: #F6F6F6;
 	float: left;
-	height: 700px;	
-	width: 35%;	
+	/*border: 1px solid #CCC;
+	border-radius: 6px 6px 6px 6px;
+	box-shadow: 3px 3px 5px #CCCCCC;*/
+	height: 700px;
+	/*padding: 15px;
+	position: absolute;*/
+	right: 0;
+	top: 0;
+	width: 35%;
 }
 
-.sidebar-container {
-	padding: 10px;	
+.sidebar-content {
+	margin: 10px; 	
 }
 
-#map-footer {
-	border-top: 1px solid #CCC;
-	clear: both;
-	padding: 10px;
+#sel-boundary label {
+	display: inline;
+	font-weight: normal;
+	margin: 0 0 0 5px;
+}
+
+#sel-boundary input {
+	margin: 0;	
 }
 
 #map-sidebar h3 {
-	margin: 10px 0 0 10px;
-	padding-left: 0;
-}
-
-#map-sidebar ul {
-	margin: 0;
-}
-
-/* Sidebar */
-.sidebar-hd-section {	
-	font-size: 11px;
-	overflow: hidden;	
-}
-
-.pane {
-	border: 1px solid #ccc;
-	clear: both;
-	margin: 5px 0 20px;
-	padding: 5px;
-}
-
-
-.pane .scroll {
-	height: 300px;
-	overflow-y:scroll;
-	overflow-x: hidden;	
-}
-
-#stateList, #tribeList, .list-box {
-	border: 1px solid #ccc;
-	height: 130px;
-	margin: 5px 0 20px;
-	overflow-y:scroll;
-	overflow-x: hidden;
-	padding: 5px;
-}
-
-#stateList a, #tribeList a, .list-box a {
-	display: block;
-	padding: 3px 0 3px 3px;	
-}
-
-#stateList a:hover, #tribeList a:hover, .list-box a:hover {
-	background-color: #FFFFE6;
-}
-
-#stateList li, #tribeList li, .list-box li, .auctionList li {
-	line-height: 15px;
-	margin-bottom: 3px;	
-}
-
-#itemList {
-	margin: 5px 0 20px;	
-}
-
-#sidebar-footer {
-	bottom: 30px;
-	position: absolute;
-	width: 100%
-}
-
-.legend {
-	border:1px solid #CCC;
-	margin: 20px 0 0;
-	overflow: hidden;
-	padding: 5px 5px 3px;
-	width: 180px;
-	*width: 190px;
-}
-
-.legend .title {
-	text-align: left;
-	margin-bottom: 5px;
-	font-weight: bold;
-	font-size: 90%;
-}
-
-.legend ul {
-	margin: 0;
-	margin-bottom: 5px;
+	font-size: 14px;
+	line-height: normal;
+	margin: 0;	
 	padding: 0;
-	float: left;
-	list-style: none;
 }
 
-.legend li {
-	float: left;
-	font-size: 11px;
-	list-style-type: none;
-	margin: 0 15px 0 0;
+#map-sidebar hr { 
+	border-color: #DDD -moz-use-text-color #FFFFFF; 
+}
+
+#selectedService {
+	display: none;
+	margin-top: 25px;	
 }
 
 
-.legend li span {
-	float: left;
-	height: 10px;
-	margin: 4px 5px 0 0;
-	width: 30px;	
+
+/* =============================================================================
+   Links
+   ========================================================================== */
+#skip {
+	position:absolute;
+	left:35%;
+	top:0;
+	z-index:900;
+	width:50%;
 }
 
-.instruct {
-	color: #666;
-	font-size: 11px;	
-	font-style: italic;
-	margin-bottom: 15px;
+#skip a {
+	display:block;
+	width:50%;
+	padding:5px;
+	border-width:0 1px 1px;
+	border-style:solid;
+	border-color:#8cdb78;
+	background:#000;
+	color:#bfe9ff;
+	text-align:center;
 }
 
-/* Buttons */
-#btn-resetMap {
-	float: right;
-	font-size: 11px;
-	padding: 3px;
+#skip a:hover, #skip a:focus, #skip a:active {
+	color:#9cf285;
+	text-decoration:none;
 }
 
-/* Tables - Sort Cols. */
-.tbl-data {
-	width: 100% !important;	
+
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
+table {
+	border-bottom: 1px solid #D3D3D3;
+	width: 100%;
 }
 
-th {
-	background-color: #666;
-	color: #FFF;
-	padding: 3px 10px 3px;	
-	text-align: left;	
+.tbl-data th, .tbl-data th {
+	border-bottom: 2px solid #D3D3D3;
+	color: #999999;
+	font-weight: bold;
+	padding: 5px 15px 0 5px;
+	text-align: left;
+}
+
+.tbl-data td {
+	font-size: 11.5px;
+	padding: 5px 15px 5px 5px;
 	white-space: nowrap;
 }
 
-.tablesorter th {
-	cursor: pointer;
+.odd td {
+	background-color: #F3F6FB;
 }
 
-.col-alignRight {
-	text-align: right;	
+.tbl-data tr:hover td {
+	background-color: #FFFFE6;
 }
 
-.col-alignCenter {
-	text-align: center;	
-}
 
-td {
-	border-bottom: 1px solid #CCC;
-	padding: 3px 10px 3px;	
-}
 
-tr:hover td {
-	background-color: #FFFFE6;	
-	cursor: pointer;
-}
+/* =============================================================================
+   Widgets
+   ========================================================================== */
 
-tr.selected td {
-	background-color: #FFEE77;	
-}
-
-.sort-wrapper {
-	position: relative;
-}
-
-.sort {
-	height: 16px;
-	position: absolute;
-	/*right: 3px;
-	top: 0;*/
-	width: 13px;
-}
-
-.sorting .sort {
-	background: url("../img/dt-arrows.png") no-repeat scroll right center transparent;
-}
-
-.sorting_asc .sort {
-	background: url("../img/dt-arrow-up.png") no-repeat right center;
-}
-
-.sorting_desc .sort {
-	background: url("../img/dt-arrow-dn.png") no-repeat right center;
+.panel-scroll {
+	border: 1px solid #CCCCCC;
+	height: 300px;
+	overflow: scroll;
+	padding: 5px;
 }
 
