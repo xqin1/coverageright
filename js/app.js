@@ -1,6 +1,6 @@
 
 $(document).ready(function () {
-	$('ul.macro li a').click(function() {
+	$('#map-layerSwitch a').click(function() {
 	
 		if (this.id=="mapboxTerrain"){
 			map.setBaseLayer(mapboxTerrain);
@@ -17,7 +17,7 @@ $(document).ready(function () {
 		else if (this.id=="mapboxSatellite"){
 			map.setBaseLayer(mapboxSatellite);
 		}
-			$('ul.macro li a').removeClass('active');
+			$('#map-layerSwitch a').removeClass('active');
 			$(this).addClass('active');
 	});
 	 
