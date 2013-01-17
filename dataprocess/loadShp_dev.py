@@ -25,16 +25,16 @@ def main():
 		cursor = conn.cursor()
 		techCount = 0
 		companyCount = 0
-		sqlComm = "DROP TABLE IF EXISTS " + schema + "." + tableName + " CASCADE"
-		cursor.execute(sqlComm)
-		conn.commit()
-		sqlComm = "CREATE TABLE " + schema + "." + tableName + " (gid integer PRIMARY KEY,entity varchar(100), protocol varchar(100))"
-		cursor.execute(sqlComm)
-		conn.commit()
-		sqlComm = "SELECT AddGeometryColumn('" + schema + "','" + tableName + "', 'geom', 4326, 'MULTIPOLYGON', 2 )"
+		# sqlComm = "DROP TABLE IF EXISTS " + schema + "." + tableName + " CASCADE"
+		# cursor.execute(sqlComm)
+		# conn.commit()
+		# sqlComm = "CREATE TABLE " + schema + "." + tableName + " (gid integer PRIMARY KEY,entity varchar(100), protocol varchar(100))"
+		# cursor.execute(sqlComm)
+		# conn.commit()
+		# sqlComm = "SELECT AddGeometryColumn('" + schema + "','" + tableName + "', 'geom', 4326, 'MULTIPOLYGON', 2 )"
 
-		cursor.execute(sqlComm)
-		conn.commit()
+		# cursor.execute(sqlComm)
+		# conn.commit()
 		for techType in os.listdir(rootDir):
 		    tech={}
 		    tech["techType"]=techType
@@ -63,7 +63,7 @@ def main():
 									ext.append(float(e))
 								companyObj["extent"]=ext
 						p.wait()
-						if companyCount>0:
+						if companyCount>331:
 							shpComm = 'shp2pgsql -s 4326 -d -I -W latin1 -g geom "' + shapeFileDir + "\\" + shapeFile + '" ' + schema + "." + shapeFile.replace("_dissolved.shp","") + " | psql -h " + host + " -d " + dbname + " -U " + user
 							print "load " + shapeFile + " to postgres"
 							shpP = subprocess.call(shpComm,shell=True)

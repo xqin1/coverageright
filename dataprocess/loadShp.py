@@ -63,7 +63,7 @@ def main():
 									ext.append(float(e))
 								companyObj["extent"]=ext
 						p.wait()
-						if companyCount>170:
+						if companyCount>282:
 							shpComm = 'shp2pgsql -s 4326 -d -I -W latin1 -g geom "' + shapeFileDir + "\\" + shapeFile + '" ' + schema + "." + shapeFile.replace("_dissolved.shp","") + " | psql -h " + host + " -d " + dbname + " -U " + user
 							print "load " + shapeFile + " to postgres"
 							shpP = subprocess.call(shpComm,shell=True)
