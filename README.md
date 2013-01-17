@@ -1,4 +1,4 @@
-# Spatial Data Processing and Visualization
+# Coverage Right Boundary Data - a classic web mapping problem
 
 ### Problem to Solve:
 
