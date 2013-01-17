@@ -1,4 +1,4 @@
-# Coverage Right Boundary Data - a classic web mapping problem
+# Visualize Coverage Right Boundary Data - a classic web mapping problem
 
 ### Problem to Solve:
 
