@@ -37,7 +37,7 @@ def main():
 		# sqlComm = "CREATE TABLE " + schema + "." + tableName + " (gid integer PRIMARY KEY,entity varchar(100), protocol varchar(100))"
 		# cursor.execute(sqlComm)
 		# conn.commit()
-		# sqlComm = "SELECT AddGeometryColumn('" + schema + "','" + tableName + "', 'geom', 4326, 'MULTIPOLYGON', 2 )"
+		# sqlComm = "SELECT AddGeometryColumn('" + schema + "','" + tableName + "', 'geom', 4326, 'MULTIPOLYGON', 2 )"run
 		# print sqlComm
 
 		# cursor.execute(sqlComm)

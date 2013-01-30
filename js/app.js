@@ -246,7 +246,7 @@ function createServiceList(cLayers){
 	$("#tbl-service").find('tbody').empty();
 	var content = "";
 	 for (var i = 0; i < cLayers.length; i++) {
-	 	console.log(content);
+	 	//console.log(content);
 
 	        content += '<tr><td><input id=' + cLayers[i].id + ' type="checkbox" checked onclick="handleVisibility(' + cLayers[i].id + ');">' + "</td>";
 	        content += '<td><div style="width:40px;height:20px;background-color:' + colorArray[i] + ';"></div></td>';
@@ -359,8 +359,11 @@ function drawMap(){
 			}
 		}
 	}
-
 	updateCoverageLayers(selectedObj);
+
+	//update url hash
+	window.location.hash = selectedID.toString();
+
 }
 
 function randomLayer(num){
@@ -377,10 +380,9 @@ function randomLayer(num){
 					layerArray.push(myJson[j].property[k].serviceName);
 				}
 			}
-
 		}
 	}
-	console.log(layerArray);
+	//console.log(layerArray);
 	updateCoverageLayers(layerArray);
 }
 
@@ -401,12 +403,21 @@ $.getJSON("data/coverageRigh201210_2.json",function(data){
 		$("#boundarySelect").append(optgroup);
 	}
 
+//process hash
+	if (window.location.hash.length>1){
+		selectedID = window.location.hash.replace("#","").split(",");
+		$('#boundarySelect').val(selectedID);
+		drawMap();
+	}
+
 	$("#boundarySelect").chosen({max_selected_options:5});
 
 	$("#boundarySelect").chosen().change(function () {
     	selectedID = [];
     	selectedID = $("#boundarySelect").val();
 	  });
+
+	
 
 	
 });
