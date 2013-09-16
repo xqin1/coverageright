@@ -201,8 +201,8 @@ function updateCoverageLayers(cLayers){
 	for (var i=0;i<cLayers.length;i++){
 		var obj=new Object();
 		obj["mLayer_" + i] = new OpenLayers.Layer.WMS( 
-				"mLayer_"+i, geoServerURL + "coverageright201010/wms",
-				{layers: 'coverageright201010:' + cLayers[i].serviceName, //Bluegrass_Cellular_1X', 
+				"mLayer_"+i, geoServerURL + "coverageright201301/wms",
+				{layers: 'coverageright201301:' + cLayers[i].serviceName, //Bluegrass_Cellular_1X', 
 				 format: 'image/png',
 				 sldBody: getSLDBody(cLayers[i].serviceName,i),
 				 isBaseLayer:false,
@@ -314,7 +314,7 @@ function zoomToBound(b1,b2,b3,b4){
 function getSLDBody(layerName,index){
 	 var sld = '<StyledLayerDescriptor version="1.0.0">';
 		sld+= '<NamedLayer>';
-        sld+= '<Name>coverageright201010:' + layerName + '</Name>';
+        sld+= '<Name>coverageright201301:' + layerName + '</Name>';
         sld+= '<UserStyle>';
         sld+= '<IsDefault>1</IsDefault>';
         sld+= '<FeatureTypeStyle>';
@@ -386,7 +386,7 @@ function randomLayer(num){
 	updateCoverageLayers(layerArray);
 }
 
-$.getJSON("data/coverageRigh201210_2.json",function(data){
+$.getJSON("data/coverageRigh201307.json",function(data){
 	myJson=data;
 	map.zoomToExtent(fullExtent);
 	map.zoomTo(4);

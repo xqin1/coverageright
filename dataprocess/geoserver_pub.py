@@ -11,7 +11,7 @@ import json
 def main():
 	try:
 		finalList = []
-		rootDir = "C:\\projects\\Data\\americaroamer\\2012 Oct\\CoverageRight_SHP_201210\\Carriers"
+		rootDir = "C:\\projects\\Data\\americaroamer\\2013 July\\Carriers"
 		#conn_string = "host='165.135.239.38' dbname='gisdb' user='bbmap' password='bbmap_ps'"	
 		# host = "localhost"
 		# dbname = "gisdb20" 
@@ -26,8 +26,8 @@ def main():
 		username = "admin";
 		password = "geoserver";
 		service = "http://165.135.239.37:8010/geoserver/rest/workspaces/" # geoserver URL
-		serverPath = "/GEOWEB/data/americaroamer/coverageright201010/Carriers/"
-		workspace = "coverageright201010"
+		serverPath = "/GEOWEB/data/americaroamer/coverageright201301/Carriers/"
+		workspace = "coverageright201301"
 		techCount = 0
 		companyCount = 0
 		# sqlComm = "DROP TABLE IF EXISTS " + schema + "." + tableName + " CASCADE"
@@ -97,7 +97,7 @@ def main():
 		# cursor.execute(sqlComm)
 		# conn.commit()
 		jsondata = json.dumps(finalList, indent=4, skipkeys=True, sort_keys=True)
-		with open("c:\\projects\\python\\coverageRigh201210_2.json" , 'w') as f:
+		with open("c:\\projects\\data\\americaroamer\\2013 July\\coverageRigh201307.json" , 'w') as f:
 			f.write(jsondata)
 		f.closed
 
